@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sakthivel Ravichandran — Data Engineer & AI Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #050810;
+  --bg2: #080d1a;
+  --surface: #0d1527;
+  --surface2: #111e35;
+  --border: rgba(99,179,237,0.12);
+  --accent: #38bdf8;
+  --accent2: #818cf8;
+  --accent3: #34d399;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --card: rgba(13,21,39,0.85);
+  --glow: rgba(56,189,248,0.15);
+  --radius: 16px;
+}
+[data-theme="light"] {
+  --bg: #f0f4ff;
+  --bg2: #e8eeff;
+  --surface: #ffffff;
+  --surface2: #f1f5fd;
+  --border: rgba(56,189,248,0.2);
+  --accent: #0ea5e9;
+  --accent2: #6366f1;
+  --accent3: #10b981;
+  --text: #0f172a;
+  --muted: #64748b;
+  --card: rgba(255,255,255,0.9);
+  --glow: rgba(14,165,233,0.1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.65;
+  overflow-x:hidden;
+  transition:background 0.3s,color 0.3s;
+}
+/* NOISE TEXTURE */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.4;
+}
+/* GRID LINES */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:
+    linear-gradient(var(--border) 1px,transparent 1px),
+    linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:64px 64px;
+  pointer-events:none;z-index:0;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;width:100%;z-index:100;
+  padding:1rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  backdrop-filter:blur(20px);
+  background:rgba(5,8,16,0.7);
+  border-bottom:1px solid var(--border);
+  transition:background 0.3s;
+}
+[data-theme="light"] nav{background:rgba(240,244,255,0.8);}
+.nav-logo{
+  font-family:'Syne',sans-serif;
+  font-weight:800;font-size:1.2rem;
+  color:var(--accent);
+  letter-spacing:-0.5px;
+}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
+.nav-links a{
+  font-size:0.85rem;font-weight:500;
+  color:var(--muted);
+  text-decoration:none;
+  transition:color 0.2s;
+  letter-spacing:0.3px;
+}
+.nav-links a:hover{color:var(--text);}
+.theme-btn{
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text);
+  border-radius:50px;padding:0.4rem 1rem;
+  cursor:pointer;font-size:0.8rem;
+  transition:all 0.2s;font-family:'DM Sans',sans-serif;
+}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;}
+.hamburger span{display:block;width:24px;height:2px;background:var(--text);transition:all 0.3s;}
+
+/* SECTIONS */
+section{position:relative;z-index:1;}
+.container{max-width:1100px;margin:0 auto;padding:0 2rem;}
+.section-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.72rem;
+  color:var(--accent);
+  letter-spacing:3px;
+  text-transform:uppercase;
+  margin-bottom:0.75rem;
+}
+.section-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2rem,4vw,3rem);
+  font-weight:800;
+  line-height:1.1;
+  margin-bottom:1rem;
+}
+.subtitle{
+  font-size:1.1rem;
+  color:var(--accent);
+  font-weight:600;
+  margin-bottom:1.5rem;
+  font-family:'JetBrains Mono',monospace;
+}
+
+/* HERO */
+#hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding:7rem 2rem 4rem;
+  position:relative;overflow:hidden;
+}
+.hero-glow{
+  position:absolute;
+  width:600px;height:600px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,0.12) 0%,transparent 70%);
+  top:-100px;right:-100px;
+  pointer-events:none;
+}
+.hero-glow2{
+  position:absolute;
+  width:400px;height:400px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(129,140,248,0.1) 0%,transparent 70%);
+  bottom:0;left:10%;
+  pointer-events:none;
+}
+.hero-inner{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:4rem;align-items:center;
+  width:100%;max-width:1100px;margin:0 auto;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:50px;padding:0.4rem 1rem;
+  font-size:0.78rem;color:var(--accent);
+  font-family:'JetBrains Mono',monospace;
+  margin-bottom:1.5rem;
+}
+.hero-badge::before{
+  content:'';width:8px;height:8px;border-radius:50%;
+  background:var(--accent3);animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.3)}}
+.hero-name{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(3rem,7vw,5.5rem);
+  font-weight:800;line-height:0.95;
+  letter-spacing:-2px;
+  margin-bottom:1rem;
+}
+.hero-name span{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-role{
+  font-size:1.1rem;
+  color:var(--muted);
+  margin-bottom:1.5rem;
+  min-height:2rem;
+}
+.hero-desc{
+  font-size:1rem;color:var(--muted);
+  max-width:520px;line-height:1.7;
+  margin-bottom:2rem;
+}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-primary{
+  background:var(--accent);color:#050810;
+  padding:0.75rem 1.75rem;border-radius:50px;
+  font-weight:600;font-size:0.9rem;
+  text-decoration:none;border:none;cursor:pointer;
+  transition:all 0.2s;display:inline-flex;align-items:center;gap:0.5rem;
+  font-family:'DM Sans',sans-serif;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(56,189,248,0.35);}
+.btn-outline{
+  background:transparent;color:var(--text);
+  padding:0.75rem 1.75rem;border-radius:50px;
+  font-weight:500;font-size:0.9rem;
+  text-decoration:none;
+  border:1px solid var(--border);
+  transition:all 0.2s;display:inline-flex;align-items:center;gap:0.5rem;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+.hero-photo-wrap{
+  position:relative;flex-shrink:0;
+  display:none;
+}
+.hero-photo-ring{
+  width:220px;height:220px;border-radius:50%;
+  background:conic-gradient(var(--accent),var(--accent2),var(--accent3),var(--accent));
+  padding:3px;animation:spin 8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-photo{
+  width:100%;height:100%;border-radius:50%;
+  object-fit:cover;object-position:top;
+  border:4px solid var(--bg);
+}
+.hero-photo-placeholder{
+  width:100%;height:100%;border-radius:50%;
+  background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;
+  color:var(--accent);border:4px solid var(--bg);
+}
+.hero-stats{
+  display:flex;gap:2rem;margin-top:2rem;flex-wrap:wrap;
+}
+.stat-item{display:flex;flex-direction:column;}
+.stat-num{
+  font-family:'Syne',sans-serif;font-size:1.8rem;
+  font-weight:800;color:var(--text);
+}
+.stat-num span{color:var(--accent);}
+.stat-label{font-size:0.78rem;color:var(--muted);margin-top:0.15rem;}
+
+/* GITHUB LIVE */
+#github-live{padding:1.5rem 0;border-bottom:1px solid var(--border);}
+.github-strip{
+  display:flex;align-items:center;gap:2rem;
+  max-width:1100px;margin:0 auto;padding:0 2rem;
+  flex-wrap:wrap;
+}
+.github-stat-card{
+  display:flex;align-items:center;gap:0.75rem;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;padding:0.6rem 1.2rem;
+}
+.github-stat-card .icon{font-size:1.2rem;}
+.github-stat-info small{display:block;font-size:0.7rem;color:var(--muted);}
+.github-stat-info strong{font-size:1rem;font-family:'Syne',sans-serif;color:var(--text);}
+#gh-loading{color:var(--muted);font-size:0.85rem;font-family:'JetBrains Mono',monospace;}
+
+/* ABOUT */
+#about{padding:7rem 0;}
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:start;
+}
+.about-text p{color:var(--muted);line-height:1.8;margin-bottom:1.2rem;}
+.about-text p strong{color:var(--text);}
+.about-links{display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:1.5rem;}
+.about-link{
+  display:flex;align-items:center;gap:0.5rem;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:50px;padding:0.45rem 1rem;
+  font-size:0.8rem;color:var(--muted);text-decoration:none;
+  transition:all 0.2s;
+}
+.about-link:hover{border-color:var(--accent);color:var(--accent);}
+.about-link .link-icon{font-size:1rem;}
+.quick-facts{display:flex;flex-direction:column;gap:1rem;}
+.fact-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:1.2rem 1.5rem;
+  display:flex;align-items:center;gap:1rem;
+  transition:border-color 0.2s,transform 0.2s;
+}
+.fact-card:hover{border-color:var(--accent);transform:translateX(4px);}
+.fact-icon{font-size:1.5rem;flex-shrink:0;}
+.fact-info small{display:block;font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.fact-info strong{font-size:0.92rem;color:var(--text);}
+
+/* SKILLS */
+#skills{padding:7rem 0;background:var(--bg2);}
+.skills-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.5rem;margin-top:3rem;
+}
+.skill-category{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:1.75rem;
+  backdrop-filter:blur(10px);
+  transition:border-color 0.3s,transform 0.3s;
+}
+.skill-category:hover{border-color:var(--accent);transform:translateY(-4px);}
+.skill-cat-header{
+  display:flex;align-items:center;gap:0.75rem;
+  margin-bottom:1.25rem;
+}
+.skill-cat-icon{
+  width:38px;height:38px;border-radius:10px;
+  background:var(--glow);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+}
+.skill-cat-title{
+  font-family:'Syne',sans-serif;
+  font-weight:700;font-size:0.95rem;
+}
+.skill-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.skill-tag{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:6px;padding:0.3rem 0.7rem;
+  font-size:0.78rem;color:var(--text);
+  font-family:'JetBrains Mono',monospace;
+  transition:all 0.2s;
+}
+.skill-tag:hover{border-color:var(--accent);color:var(--accent);}
+
+/* EXPERIENCE */
+#experience{padding:7rem 0;}
+.timeline{position:relative;margin-top:3rem;}
+.timeline::before{
+  content:'';
+  position:absolute;left:16px;top:0;bottom:0;
+  width:2px;background:linear-gradient(to bottom,var(--accent),var(--accent2),transparent);
+}
+.timeline-item{
+  position:relative;padding-left:52px;margin-bottom:2.5rem;
+}
+.timeline-dot{
+  position:absolute;left:8px;top:4px;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--accent);border:3px solid var(--bg);
+  box-shadow:0 0 12px var(--accent);
+}
+.timeline-dot.inactive{background:var(--accent2);}
+.timeline-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.75rem;
+  backdrop-filter:blur(10px);
+  cursor:pointer;transition:border-color 0.3s;
+}
+.timeline-card:hover{border-color:var(--accent);}
+.tl-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.tl-role{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;color:var(--text);}
+.tl-company{font-size:0.85rem;color:var(--accent);margin-top:0.2rem;}
+.tl-date{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.72rem;color:var(--muted);
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:50px;padding:0.25rem 0.75rem;white-space:nowrap;
+}
+.tl-details{margin-top:1rem;display:none;}
+.tl-details.open{display:block;}
+.tl-details ul{padding-left:1rem;}
+.tl-details li{font-size:0.88rem;color:var(--muted);margin-bottom:0.5rem;}
+.tl-details li strong{color:var(--text);}
+.tl-expand{font-size:0.78rem;color:var(--accent);margin-top:0.75rem;display:inline-flex;align-items:center;gap:0.3rem;}
+
+/* PROJECTS */
+#projects{padding:7rem 0;background:var(--bg2);}
+.projects-filter{display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+.filter-btn{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:50px;padding:0.4rem 1rem;
+  font-size:0.8rem;color:var(--muted);cursor:pointer;
+  transition:all 0.2s;font-family:'DM Sans',sans-serif;
+}
+.filter-btn.active,.filter-btn:hover{
+  background:var(--accent);color:#050810;border-color:var(--accent);
+}
+.projects-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:1.5rem;
+}
+.project-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.75rem;
+  backdrop-filter:blur(10px);
+  transition:all 0.3s;
+  display:flex;flex-direction:column;
+}
+.project-card:hover{
+  border-color:var(--accent);
+  transform:translateY(-6px);
+  box-shadow:0 20px 60px rgba(56,189,248,0.1);
+}
+.project-card[data-hidden="true"]{display:none;}
+.project-cat{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.68rem;color:var(--accent);
+  text-transform:uppercase;letter-spacing:2px;
+  margin-bottom:0.75rem;
+}
+.project-title{
+  font-family:'Syne',sans-serif;
+  font-weight:700;font-size:1.05rem;
+  margin-bottom:0.75rem;color:var(--text);
+}
+.project-desc{font-size:0.85rem;color:var(--muted);line-height:1.65;flex:1;}
+.project-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem;}
+.project-tag{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:5px;padding:0.2rem 0.6rem;
+  font-size:0.72rem;color:var(--muted);
+  font-family:'JetBrains Mono',monospace;
+}
+.project-links{display:flex;gap:0.75rem;margin-top:1.25rem;}
+.project-link{
+  font-size:0.8rem;color:var(--accent);
+  text-decoration:none;display:flex;align-items:center;gap:0.3rem;
+  transition:opacity 0.2s;
+}
+.project-link:hover{opacity:0.7;}
+
+/* GITHUB REPOS */
+#github-repos{padding:5rem 0;}
+.repos-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:1.25rem;margin-top:2.5rem;
+}
+.repo-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:1.25rem 1.5rem;
+  transition:all 0.3s;text-decoration:none;display:block;
+  backdrop-filter:blur(10px);
+}
+.repo-card:hover{border-color:var(--accent2);transform:translateY(-3px);}
+.repo-name{
+  font-family:'Syne',sans-serif;font-weight:700;
+  color:var(--accent2);font-size:0.95rem;margin-bottom:0.5rem;
+}
+.repo-desc{font-size:0.82rem;color:var(--muted);margin-bottom:0.75rem;}
+.repo-meta{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+.repo-lang{display:flex;align-items:center;gap:0.3rem;font-size:0.75rem;color:var(--muted);}
+.lang-dot{width:10px;height:10px;border-radius:50%;}
+.repo-stars{font-size:0.75rem;color:var(--muted);}
+#repos-loading{color:var(--muted);font-size:0.9rem;padding:1rem 0;font-family:'JetBrains Mono',monospace;}
+
+/* OPEN SOURCE */
+#opensource{padding:7rem 0;}
+.os-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem;}
+.os-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:2rem;
+  backdrop-filter:blur(10px);transition:all 0.3s;
+}
+.os-card:hover{border-color:var(--accent3);transform:translateY(-4px);}
+.os-icon{font-size:2rem;margin-bottom:1rem;}
+.os-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;margin-bottom:0.5rem;}
+.os-desc{font-size:0.85rem;color:var(--muted);line-height:1.65;margin-bottom:1rem;}
+.os-link{
+  font-size:0.8rem;color:var(--accent3);
+  text-decoration:none;display:inline-flex;align-items:center;gap:0.3rem;
+}
+
+/* CERTS */
+#certifications{padding:7rem 0;background:var(--bg2);}
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem;margin-top:3rem;}
+.cert-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:1.25rem;
+  display:flex;gap:1rem;align-items:flex-start;
+  backdrop-filter:blur(10px);transition:all 0.3s;
+}
+.cert-card:hover{border-color:var(--accent2);transform:translateY(-2px);}
+.cert-logo{
+  width:40px;height:40px;border-radius:8px;
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;flex-shrink:0;
+}
+.cert-name{font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:0.2rem;}
+.cert-issuer{font-size:0.75rem;color:var(--muted);}
+
+/* CONTACT */
+#contact{padding:7rem 0;}
+.contact-wrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:start;
+}
+.contact-info p{color:var(--muted);line-height:1.8;margin-bottom:2rem;}
+.contact-links{display:flex;flex-direction:column;gap:1rem;}
+.contact-link{
+  display:flex;align-items:center;gap:1rem;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:1rem 1.25rem;
+  text-decoration:none;color:var(--text);
+  transition:all 0.2s;
+}
+.contact-link:hover{border-color:var(--accent);transform:translateX(4px);}
+.cl-icon{font-size:1.3rem;}
+.cl-info small{display:block;font-size:0.72rem;color:var(--muted);}
+.cl-info strong{font-size:0.9rem;}
+.contact-form{display:flex;flex-direction:column;gap:1rem;}
+.form-group{display:flex;flex-direction:column;gap:0.4rem;}
+.form-group label{font-size:0.8rem;color:var(--muted);letter-spacing:0.3px;}
+.form-group input,.form-group textarea{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:0.75rem 1rem;
+  color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;
+  outline:none;transition:border-color 0.2s;
+  resize:vertical;
+}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--accent);}
+.form-status{font-size:0.85rem;color:var(--accent3);min-height:1.2rem;}
+
+/* FOOTER */
+footer{
+  padding:2rem;text-align:center;
+  border-top:1px solid var(--border);
+  font-size:0.82rem;color:var(--muted);
+}
+footer a{color:var(--accent);text-decoration:none;}
+
+/* MOBILE NAV */
+.mobile-menu{
+  display:none;
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:var(--bg);z-index:99;
+  flex-direction:column;align-items:center;justify-content:center;
+  gap:2rem;
+}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{
+  font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:700;
+  color:var(--text);text-decoration:none;
+}
+
+/* ANIMATIONS */
+.fade-up{
+  opacity:0;transform:translateY(24px);
+  transition:opacity 0.6s ease,transform 0.6s ease;
+}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--muted);}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .hero-inner{grid-template-columns:1fr;text-align:center;}
+  .hero-photo-wrap{margin:0 auto;order:-1;}
+  .hero-btns{justify-content:center;}
+  .hero-stats{justify-content:center;}
+  .about-grid,.contact-wrap{grid-template-columns:1fr;}
+  .timeline::before{left:12px;}
+  .timeline-dot{left:4px;}
+  .timeline-item{padding-left:40px;}
+}
+@media(max-width:480px){
+  .projects-grid{grid-template-columns:1fr;}
+  .repos-grid{grid-template-columns:1fr;}
+  .certs-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SR_</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#github-repos">GitHub</a></li>
+    <li><a href="#opensource">Open Source</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <button class="theme-btn" onclick="toggleTheme()">☀️ Light</button>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#skills" onclick="toggleMenu()">Skills</a>
+  <a href="#experience" onclick="toggleMenu()">Experience</a>
+  <a href="#projects" onclick="toggleMenu()">Projects</a>
+  <a href="#github-repos" onclick="toggleMenu()">GitHub</a>
+  <a href="#opensource" onclick="toggleMenu()">Open Source</a>
+  <a href="#certifications" onclick="toggleMenu()">Certs</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <button class="theme-btn" onclick="toggleTheme();toggleMenu()">Toggle Theme</button>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">Available for opportunities</div>
+      <h1 class="hero-name">
+        Sakthivel<br><span>Ravichandran</span>
+      </h1>
+      <div class="hero-role">
+        Data Engineer
+      </div>
+      <p class="hero-desc">
+        Building scalable data pipelines, cloud-native architectures, and AI-powered systems.
+        Turning raw data into business intelligence with precision and craft.
+      </p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn-primary">⚡ View Projects</a>
+        <a href="https://github.com/Sakthi1030" target="_blank" class="btn-outline">🐙 GitHub</a>
+        <a href="https://drive.google.com/uc?export=download&id=1rrMkQf2UI9HPVhdxI8RWpqfPiLRWXohD" target="_blank" class="btn-outline">📄 Resume</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">1<span>+</span></div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="stat-repos">—</div>
+          <div class="stat-label">GitHub Repos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">8<span>+</span></div>
+          <div class="stat-label">Projects Built</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">20<span>+</span></div>
+          <div class="stat-label">Certifications</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-ring">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text fade-up">
+        <h2 class="section-title">Data Engineer</h2>
+        <p class="subtitle">•Power BI Dashboard Creator •AI/ML Developer</p>
+        <p>I'm Sakthivel Ravichandran, a <strong>Data Engineer</strong> currently working at <strong>Document IT LLC</strong>, working across Workday and SAP HR platforms using DC3 and SQL mostly. Strong with SQL and Microsoft technologies, holding Microsoft Fabric certification and Microsoft Azure DP-700 credentials completed through LevelUp.</p>
+        <p>My work spans <strong>real-time streaming pipelines</strong> (Azure Event Hub), <strong>cloud data platforms</strong> (Snowflake, Databricks), and <strong>AI-powered applications</strong>. Currently focused on migrating data from SAP to Workday, fixing stored procedure errors, and implementing robust error handling in ETL processes. I pursue end-to-end data solutions from raw ingestion to Power BI dashboards.</p>
+        <p>Passionate about open-source, Fabric tools, freelancing, and building scalable data systems that drive business value.</p>
+        <div class="about-links">
+          <a href="https://linkedin.com/in/sakthivel-r" target="_blank" class="about-link"><span class="link-icon">💼</span>LinkedIn</a>
+          <a href="https://github.com/Sakthi1030" target="_blank" class="about-link"><span class="link-icon">🐙</span>GitHub</a>
+          <a href="https://learn.microsoft.com/en-us/users/sakthivelravichandran-7700" target="_blank" class="about-link"><span class="link-icon">🔷</span>MS Learn</a>
+          <a href="https://agneeswararkoilthevankurichi.netlify.app/" target="_blank" class="about-link"><span class="link-icon">🌐</span>Live Site</a>
+          <a href="mailto:r7475244@gmail.com" class="about-link"><span class="link-icon">✉️</span>Email</a>
+        </div>
+      </div>
+      <div class="quick-facts">
+        <div class="fact-card">
+          <div class="fact-icon">🔷</div>
+          <div class="fact-info">
+            <small>Certification</small>
+            <strong>Microsoft Fabric — Azure DP-700 (LevelUp)</strong>
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-icon">📍</div>
+          <div class="fact-info">
+            <small>Location</small>
+            <strong>Thiruvaiyaru, Thanjavur · Open to Relocate</strong>
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-icon">💼</div>
+          <div class="fact-info">
+            <small>Current Role</small>
+            <strong>Data Engineer @ Document IT LLC</strong>
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-icon">🌐</div>
+          <div class="fact-info">
+            <small>Open Source</small>
+            <strong>Kosaksi Pasupugazh Experiments · Scholar's Collab</strong>
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-icon">📧</div>
+          <div class="fact-info">
+            <small>Email</small>
+            <strong>r7475244@gmail.com</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">// tech stack</div>
+      <h2 class="section-title">Skills & Tools</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-category fade-up">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon">🐍</div>
+          <div class="skill-cat-title">Languages</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">🐍 Python</span>
+          <span class="skill-tag">📊 SQL</span>
+        </div>
+      </div>
+      <div class="skill-category fade-up">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon">☁️</div>
+          <div class="skill-cat-title">Platforms</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">☁️ AWS</span>
+          <span class="skill-tag">🔷 Azure</span>
+          <span class="skill-tag">� Render</span>
+          <span class="skill-tag">🐧 Docker</span>
+        </div>
+      </div>
+      <div class="skill-category fade-up">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon">📊</div>
+          <div class="skill-cat-title">Data Platforms</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">❄️ Snowflake</span>
+          <span class="skill-tag">🧩 Databricks</span>
+          <span class="skill-tag">🏭 Apache Spark</span>
+          <span class="skill-tag">🐬 dbt</span>
+        </div>
+      </div>
+      <div class="skill-category fade-up">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon">🤖</div>
+          <div class="skill-cat-title">AI / ML & Big Data</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">🧠 TensorFlow</span>
+          <span class="skill-tag">🔥 PyTorch</span>
+          <span class="skill-tag">📚 scikit-learn</span>
+          <span class="skill-tag">📊 Pandas/NumPy</span>
+        </div>
+      </div>
+      <div class="skill-category fade-up">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon">📈</div>
+          <div class="skill-cat-title">BI & Visualization</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">📊 Power BI</span>
+          <span class="skill-tag"> Looker</span>
+          <span class="skill-tag">📡 Plotly</span>
+        </div>
+      </div>
+      <div class="skill-category fade-up">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon">🔄</div>
+          <div class="skill-cat-title">Orchestration & Tools</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">✈️ Apache Airflow</span>
+          <span class="skill-tag">🚀 Dagster</span>
+          <span class="skill-tag">📦 Kafka</span>
+          <span class="skill-tag">🔌 API Development</span>
+          <span class="skill-tag">🐙 Git/GitHub</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">// work history</div>
+      <h2 class="section-title">Experience</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item fade-up">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card" onclick="toggleExp(this)">
+          <div class="tl-header">
+            <div>
+              <div class="tl-role">Data Engineer</div>
+              <div class="tl-company">Document IT LLC</div>
+            </div>
+            <div class="tl-date">Aug 2025 – Present</div>
+          </div>
+          <div class="tl-expand">▼ Show details</div>
+          <div class="tl-details">
+            <ul>
+              <li><strong>Enterprise HR data</strong> — SQL queries in SSMS to validate and analyze data across Workday and HRCore systems.</li>
+              <li><strong>Data misalignment resolution</strong> — identify and fix cross-system discrepancies via code fixes and CR management.</li>
+              <li><strong>Automation</strong> — PowerShell scripts for report generation and operational data workflows using DC3 & AKSA Studio.</li>
+              <li><strong>Schema standardization</strong> — ensure end-to-end data accuracy across HR integration pipelines.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-item fade-up">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card" onclick="toggleExp(this)">
+          <div class="tl-header">
+            <div>
+              <div class="tl-role">SQL Developer Intern</div>
+              <div class="tl-company">Document IT LLC</div>
+            </div>
+            <div class="tl-date">Feb 2025 – Aug 2025</div>
+          </div>
+          <div class="tl-expand">▼ Show details</div>
+          <div class="tl-details">
+            <ul>
+              <li><strong>ETL workflows</strong> — SQL-based data extraction, transformation, and loading using SSMS for HR migration projects.</li>
+              <li><strong>Data cleansing</strong> — validated and cleaned raw data from Excel and legacy systems to meet client integration templates.</li>
+              <li><strong>Schema standardization</strong> — standardized data formats across source systems for compatibility with target schemas.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-item fade-up">
+        <div class="timeline-dot inactive"></div>
+        <div class="timeline-card" onclick="toggleExp(this)">
+          <div class="tl-header">
+            <div>
+              <div class="tl-role">Data Scientist Intern</div>
+              <div class="tl-company">IQ Tech Max</div>
+            </div>
+            <div class="tl-date">Sep 2024 – Jan 2025</div>
+          </div>
+          <div class="tl-expand">▼ Show details</div>
+          <div class="tl-details">
+            <ul>
+              <li><strong>Predictive modeling</strong> — built ML models (scikit-learn, TensorFlow) for business intelligence and automation.</li>
+              <li><strong>Data exploration & visualization</strong> — created Power BI dashboards for executive reporting.</li>
+              <li><strong>Model deployment</strong> — deployed models using Render and Docker containers.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-item fade-up">
+        <div class="timeline-dot inactive"></div>
+        <div class="timeline-card" onclick="toggleExp(this)">
+          <div class="tl-header">
+            <div>
+              <div class="tl-role">Open Source Contributor</div>
+              <div class="tl-company">Kosaksi Pasupugazh Experiments · <a href="https://scholarscolab.com/10378-2-real/" target="_blank" style="color:var(--accent);text-decoration:underline;">Scholar's Collab</a></div>
+            </div>
+            <div class="tl-date">Jun 2024 – Present</div>
+          </div>
+          <div class="tl-expand">▼ Show details</div>
+          <div class="tl-details">
+            <ul>
+              <li>Member of a collaborative team focusing on <strong>Indian datasets, ML algorithms, and synthetic data generation.</strong></li>
+              <li>Contributed to research on applied AI and data-driven approaches supported by <strong>SASTRA University and IIT Goa.</strong></li>
+              <li>Active contributor to Scholar's Collab — a knowledge-sharing platform for students and researchers.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">// portfolio</div>
+      <h2 class="section-title">Featured Projects</h2>
+    </div>
+    <div class="projects-filter fade-up">
+      <button class="filter-btn active" onclick="filterProjects('all',this)">All</button>
+      <button class="filter-btn" onclick="filterProjects('de',this)">Data Engineering</button>
+      <button class="filter-btn" onclick="filterProjects('ml',this)">ML / AI</button>
+      <button class="filter-btn" onclick="filterProjects('web',this)">Web & Scraping</button>
+    </div>
+    <div class="projects-grid" id="projectsGrid">
+
+      <div class="project-card fade-up" data-cat="de">
+        <div class="project-cat">Cloud • Open Source</div>
+        <div class="project-title">Enterprise Streaming Pipeline</div>
+        <div class="project-desc">Real-time streaming data pipeline using Amazon Kinesis for ingestion, S3 for raw storage, Snowflake for ELT, Apache Airflow for orchestration, Docker for containerization, and Power BI for executive dashboards.</div>
+        <div class="project-tags">
+          <span class="project-tag">AWS Kinesis</span><span class="project-tag">Snowflake</span>
+          <span class="project-tag">Airflow</span><span class="project-tag">Docker</span>
+          <span class="project-tag">Power BI</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sakthi1030" target="_blank" class="project-link">🐙 GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" data-cat="de">
+        <div class="project-cat">Data Engineering</div>
+        <div class="project-title">Azure Medallion Pipeline — Patient Analysis</div>
+        <div class="project-desc">End-to-end Azure pipeline ingesting patient data via Event Hub into Bronze/Silver/Gold layers in Azure Data Lake using Databricks, loaded into Synapse Analytics with Power BI reporting.</div>
+        <div class="project-tags">
+          <span class="project-tag">Azure Event Hub</span><span class="project-tag">Databricks</span>
+          <span class="project-tag">Synapse</span><span class="project-tag">Power BI</span>
+          <span class="project-tag">Delta Lake</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sakthi1030" target="_blank" class="project-link">🐙 GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" data-cat="de">
+        <div class="project-cat">Data Engineering</div>
+        <div class="project-title">eCommerce ELT Pipeline — dbt + Snowflake</div>
+        <div class="project-desc">Implemented an ELT pipeline with dbt transformation models, incremental processing, data quality checks, and Airflow orchestration for BI-ready datasets serving ecommerce analytics.</div>
+        <div class="project-tags">
+          <span class="project-tag">dbt</span><span class="project-tag">Snowflake</span>
+          <span class="project-tag">Airflow</span><span class="project-tag">Data Quality</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sakthi1030" target="_blank" class="project-link">🐙 GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" data-cat="ml">
+        <div class="project-cat">ML / AI</div>
+        <div class="project-title">NPTEL Chatbot — Gemini + Render</div>
+        <div class="project-desc">Chatbot built by integrating Google Gemini with NPTEL transcripts. Deployed as a Streamlit app on Render for real-time interaction, demonstrating retrieval-augmented generation capabilities.</div>
+        <div class="project-tags">
+          <span class="project-tag">Gemini</span><span class="project-tag">Google AI</span>
+          <span class="project-tag">Streamlit</span><span class="project-tag">Render</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sakthi1030" target="_blank" class="project-link">🐙 GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" data-cat="de">
+        <div class="project-cat">Data Engineering</div>
+        <div class="project-title">Sales CRM Pipeline</div>
+        <div class="project-desc">End-to-end CRM data pipeline with automated ingestion, transformation, and reporting. Live deployment on Render with a full pipeline visualization dashboard.</div>
+        <div class="project-tags">
+          <span class="project-tag">Python</span><span class="project-tag">SQL</span>
+          <span class="project-tag">Render</span><span class="project-tag">CRM</span>
+        </div>
+        <div class="project-links">
+          <a href="https://nexus-crm-6d4u.onrender.com/pipeline" target="_blank" class="project-link">🌐 Live Demo ↗</a>
+          <a href="https://github.com/Sakthi1030" target="_blank" class="project-link">🐙 GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" data-cat="web">
+        <div class="project-cat">Web & Scraping</div>
+        <div class="project-title">EV+scrap</div>
+        <div class="project-desc">AI-assisted scraping of electric vehicle data, pricing, and specifications from multiple platforms using DeepSeek + Crawl4AI + Groq. Exported structured output to Excel for downstream analysis.</div>
+        <div class="project-tags">
+          <span class="project-tag">DeepSeek</span><span class="project-tag">Crawl4AI</span>
+          <span class="project-tag">Groq</span><span class="project-tag">Python</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sakthi1030" target="_blank" class="project-link">🐙 GitHub ↗</a>
+        </div>
+      </div>
+
+
+
+      <div class="project-card fade-up" data-cat="web">
+        <div class="project-cat">Freelance Project</div>
+        <div class="project-title">Agneeswararkoil Temple Website</div>
+        <div class="project-desc">Community website for Agneeswararkoil Thevankurichi temple. Live on Netlify — showcases local cultural heritage with responsive design and detailed temple information.</div>
+        <div class="project-tags">
+          <span class="project-tag">HTML/CSS</span><span class="project-tag">JavaScript</span>
+          <span class="project-tag">Netlify</span>
+        </div>
+        <div class="project-links">
+          <a href="https://agneeswararkoilthevankurichi.netlify.app/" target="_blank" class="project-link">🌐 Live ↗</a>
+          <a href="https://github.com/Sakthi1030" target="_blank" class="project-link">🐙 GitHub ↗</a>
+        </div>
+      </div>
+
+
+
+      <div class="project-card fade-up" data-cat="de">
+        <div class="project-cat">Data Engineering</div>
+        <div class="project-title">Hospital ETL Pipeline</div>
+        <div class="project-desc">Comprehensive ETL pipeline for hospital data management including patient records, billing, and clinical data. Implemented data validation, transformation, and automated reporting workflows.</div>
+        <div class="project-tags">
+          <span class="project-tag">ETL</span><span class="project-tag">Python</span>
+          <span class="project-tag">SQL</span><span class="project-tag">Healthcare</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sakthi1030" target="_blank" class="project-link">🐙 GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" data-cat="ml">
+        <div class="project-cat">ML / AI</div>
+        <div class="project-title">Stock Market Analysis Repository</div>
+        <div class="project-desc">Comprehensive stock market analysis toolkit with predictive models, technical indicators, and automated trading signals. Includes data collection, feature engineering, and model deployment.</div>
+        <div class="project-tags">
+          <span class="project-tag">Finance</span><span class="project-tag">Time Series</span>
+          <span class="project-tag">Machine Learning</span><span class="project-tag">Python</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sakthi1030" target="_blank" class="project-link">🐙 GitHub ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<!-- OPEN SOURCE -->
+<section id="opensource">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">// community & open source</div>
+      <h2 class="section-title">Open Source &<br>Freelance Work</h2>
+    </div>
+    <div class="os-grid">
+      <div class="os-card fade-up">
+        <div class="os-icon">🔬</div>
+        <div class="os-title">Kosakski Pasupugazh Experiments</div>
+        <div class="os-desc">Member of a collaborative research team focusing on Indian datasets, ML algorithms, and synthetic data generation. Supported by SASTRA University and IIT Goa. Contributed to applied AI and data-driven research initiatives. Open Source Project.</div>
+        <a href="https://github.com/Sakthi1030" target="_blank" class="os-link">View contributions ↗</a>
+      </div>
+      <div class="os-card fade-up">
+        <div class="os-icon">🎓</div>
+        <div class="os-title">Scholar's Collab</div>
+        <div class="os-desc">Active member and contributor — a LinkedIn-connected knowledge-sharing platform for students and early-career researchers. Collaborating on AI/ML learning resources, dataset curation, and peer mentoring. Open Source Collaboration.</div>
+        <a href="https://scholarscolab.com/10378-2-real/" target="_blank" class="os-link">View on Scholar's Collab ↗</a>
+      </div>
+      <div class="os-card fade-up">
+        <div class="os-icon">⛪</div>
+        <div class="os-title">Agneeswararkoil Temple Website</div>
+        <div class="os-desc">Built and deployed a community website for the Agneeswararkoil Thevankurichi temple. A freelance project preserving cultural heritage digitally, live on Netlify.</div>
+        <a href="https://agneeswararkoilthevankurichi.netlify.app/" target="_blank" class="os-link">Visit Live Site ↗</a>
+      </div>
+      <div class="os-card fade-up">
+        <div class="os-icon">📦</div>
+        <div class="os-title">Infosys Springboard Projects</div>
+        <div class="os-desc">Completed Infosys Springboard internship with certifications in Predictive Analytics with TensorFlow and Mastering Data Science & ML Fundamentals. All project code available on GitHub.</div>
+        <a href="https://github.com/Sakthi1030/Infosys-Springboard-Internship" target="_blank" class="os-link">View Repository ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">// credentials</div>
+      <h2 class="section-title">Certifications & Badges</h2>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card fade-up">
+        <div class="cert-logo">🔷</div>
+        <div>
+          <div class="cert-name">Microsoft Azure DP-700 Fabric</div>
+          <div class="cert-issuer">Microsoft · <a href="https://learn.microsoft.com/en-us/users/sakthivelravichandran-7700" target="_blank" style="color:var(--accent);font-size:0.75rem">View Badge ↗</a></div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">🏆</div>
+        <div>
+          <div class="cert-name">HackerRank Profile</div>
+          <div class="cert-issuer">R Sakthi · <a href="https://www.hackerrank.com/r7475244" target="_blank" style="color:var(--accent);font-size:0.75rem">r7475244 ↗</a></div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">⭐</div>
+        <div>
+          <div class="cert-name">5-Star Python Badge</div>
+          <div class="cert-issuer">HackerRank</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">⭐</div>
+        <div>
+          <div class="cert-name">5-Star SQL Badge</div>
+          <div class="cert-issuer">HackerRank</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">🤖</div>
+        <div>
+          <div class="cert-name">Prompt Engineering</div>
+          <div class="cert-issuer">LetsUpgrade · Aug 2024</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">🧠</div>
+        <div>
+          <div class="cert-name">Predictive Analytics with TensorFlow</div>
+          <div class="cert-issuer">Infosys Springboard · Jul 2024</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">🎯</div>
+        <div>
+          <div class="cert-name">Bridging the Gap: Computational Math & AI</div>
+          <div class="cert-issuer">IIIT Kottayam · Jul 2024</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">📈</div>
+        <div>
+          <div class="cert-name">Data Analytics & Visualization Job Simulation</div>
+          <div class="cert-issuer">Accenture · Forage · Jun 2024</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">📚</div>
+        <div>
+          <div class="cert-name">Mastering Data Science & ML Fundamentals</div>
+          <div class="cert-issuer">Infosys Springboard · Feb 2024</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">🧠</div>
+        <div>
+          <div class="cert-name">Deep Learning using TensorFlow</div>
+          <div class="cert-issuer">SRM University · Feb 2024</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">📦</div>
+        <div>
+          <div class="cert-name">Big Data Fundamentals</div>
+          <div class="cert-issuer">Skillsoft · Jan 2024</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">🔥</div>
+        <div>
+          <div class="cert-name">Facial Expression Recognition with PyTorch</div>
+          <div class="cert-issuer">Coursera · Jan 2024</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">📊</div>
+        <div>
+          <div class="cert-name">Data Visualization & Dashboards with Excel & Cognos</div>
+          <div class="cert-issuer">IBM · Dec 2023</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">📈</div>
+        <div>
+          <div class="cert-name">Excel Basics for Data Analysis</div>
+          <div class="cert-issuer">IBM · Dec 2023</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">🐍</div>
+        <div>
+          <div class="cert-name">Get Started with Python</div>
+          <div class="cert-issuer">Google · Dec 2023</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">📊</div>
+        <div>
+          <div class="cert-name">Data Analytics</div>
+          <div class="cert-issuer">IBM · Oct 2023</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">📖</div>
+        <div>
+          <div class="cert-name">Introduction to Microsoft Excel</div>
+          <div class="cert-issuer">Coursera · Oct 2022</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">🔒</div>
+        <div>
+          <div class="cert-name">Cyber Security and Privacy</div>
+          <div class="cert-issuer">NPTEL</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-logo">💼</div>
+        <div>
+          <div class="cert-name">PwC Power BI Virtual Internship</div>
+          <div class="cert-issuer">PwC via Forage</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">// let's connect</div>
+      <h2 class="section-title">Get In Touch</h2>
+    </div>
+    <div class="contact-wrap">
+      <div class="contact-info fade-up">
+        <p>Open to full-time <strong>Data Engineering</strong> and <strong>AI/ML roles</strong>. Also available for freelance data projects, pipeline consulting, and research collaboration.</p>
+        <div class="contact-links">
+          <a href="mailto:r7475244@gmail.com" class="contact-link">
+            <span class="cl-icon">✉️</span>
+            <div class="cl-info"><small>Email</small><strong>r7475244@gmail.com</strong></div>
+          </a>
+          <a href="https://www.linkedin.com/in/sakthivel-r-943a871ba/" target="_blank" class="contact-link">
+            <span class="cl-icon">💼</span>
+            <div class="cl-info"><small>LinkedIn</small><strong>sakthivel-r-943a871ba</strong></div>
+          </a>
+          <a href="https://github.com/Sakthi1030" target="_blank" class="contact-link">
+            <span class="cl-icon">🐙</span>
+            <div class="cl-info"><small>GitHub</small><strong>Sakthi1030</strong></div>
+          </a>
+          <a href="https://learn.microsoft.com/en-us/users/sakthivelravichandran-7700" target="_blank" class="contact-link">
+            <span class="cl-icon">🔷</span>
+            <div class="cl-info"><small>Microsoft Learn</small><strong>View Badges & Profile</strong></div>
+          </a>
+          <a href="https://drive.google.com/uc?export=download&id=1rrMkQf2UI9HPVhdxI8RWpqfPiLRWXohD" target="_blank" class="contact-link">
+            <span class="cl-icon">📄</span>
+            <div class="cl-info"><small>Resume</small><strong>Download from Google Drive</strong></div>
+          </a>
+        </div>
+      </div>
+      <div class="fade-up">
+        <div class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" id="cf-name" placeholder="Jane Smith"/>
+          </div>
+          <div class="form-group">
+            <label>Your Email</label>
+            <input type="email" id="cf-email" placeholder="jane@company.com"/>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea id="cf-msg" rows="5" placeholder="Hi Sakthivel, I'd like to discuss..."></textarea>
+          </div>
+          <div class="form-status" id="formStatus"></div>
+          <button class="btn-primary" onclick="sendMessage()" style="width:100%;justify-content:center;">
+            Send Message ✉️
+          </button>
+          <p style="font-size:0.75rem;color:var(--muted);text-align:center;margin-top:0.5rem;">
+            Or email directly at <a href="mailto:r7475244@gmail.com" style="color:var(--accent)">r7475244@gmail.com</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Designed & built by <a href="https://github.com/Sakthi1030">Sakthivel Ravichandran</a> · 2025 · Chennai, India</p>
+  <p style="margin-top:0.4rem;font-size:0.75rem">To update content, edit the data sections in this HTML file or reach out 🚀</p>
+</footer>
+
+<script>
+// ── THEME ──
+function toggleTheme(){
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.querySelector('.theme-btn').textContent = isDark ? '🌙 Dark' : '☀️ Light';
+}
+
+// ── MOBILE MENU ──
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// ── GITHUB API ──
+const GH_USER = 'Sakthi1030';
+async function fetchGitHub(){
+  try{
+    const [userRes, reposRes] = await Promise.all([
+      fetch(`https://api.github.com/users/${GH_USER}`),
+      fetch(`https://api.github.com/users/${GH_USER}/repos?sort=updated&per_page=20`)
+    ]);
+    if(!userRes.ok || !reposRes.ok) throw new Error('API limit');
+    const user = await userRes.json();
+    const repos = await reposRes.json();
+
+    // Update stat
+    const statEl = document.getElementById('stat-repos');
+    if(statEl) statEl.innerHTML = (user.public_repos || '—') + '<span>+</span>';
+
+    // Render strip
+    const strip = document.querySelector('.github-strip');
+    strip.innerHTML = `
+      <div class="github-stat-card"><div class="icon">📦</div><div class="github-stat-info"><small>Public Repos</small><strong>${user.public_repos}</strong></div></div>
+      <div class="github-stat-card"><div class="icon">👥</div><div class="github-stat-info"><small>Followers</small><strong>${user.followers}</strong></div></div>
+      <div class="github-stat-card"><div class="icon">⭐</div><div class="github-stat-info"><small>Total Stars</small><strong>${repos.reduce((a,r)=>a+r.stargazers_count,0)}</strong></div></div>
+      <div class="github-stat-card"><div class="icon">🍴</div><div class="github-stat-info"><small>Total Forks</small><strong>${repos.reduce((a,r)=>a+r.forks_count,0)}</strong></div></div>
+      <a href="https://github.com/${GH_USER}" target="_blank" class="btn-outline" style="font-size:0.8rem;padding:0.4rem 1rem">View Profile ↗</a>
+    `;
+
+    // Render repos
+    const grid = document.getElementById('reposGrid');
+    const loadEl = document.getElementById('repos-loading');
+    loadEl.style.display='none';
+    const langColors = {Python:'#3572A5',JavaScript:'#f1e05a',HTML:'#e34c26',CSS:'#563d7c',R:'#198CE7',Shell:'#89e051',TypeScript:'#2b7489'};
+    repos.slice(0,12).forEach(repo=>{
+      const card = document.createElement('a');
+      card.className='repo-card';
+      card.href=repo.html_url;
+      card.target='_blank';
+      card.innerHTML=`
+        <div class="repo-name">📁 ${repo.name}</div>
+        <div class="repo-desc">${repo.description||'No description provided.'}</div>
+        <div class="repo-meta">
+          ${repo.language?`<div class="repo-lang"><span class="lang-dot" style="background:${langColors[repo.language]||'#64748b'}"></span>${repo.language}</div>`:''}
+          <div class="repo-stars">⭐ ${repo.stargazers_count}</div>
+          <div class="repo-stars">🍴 ${repo.forks_count}</div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+    document.getElementById('repos-more').style.display='block';
+  } catch(e){
+    document.querySelector('.github-strip').innerHTML='<span style="color:var(--muted);font-size:0.85rem">GitHub stats unavailable (API rate limit). <a href="https://github.com/Sakthi1030" target="_blank" style="color:var(--accent)">View on GitHub ↗</a></span>';
+    document.getElementById('repos-loading').textContent='Could not fetch repos. View on GitHub directly.';
+  }
+}
+fetchGitHub();
+
+// ── PROJECT FILTER ──
+function filterProjects(cat, btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.project-card').forEach(card=>{
+    card.dataset.hidden = (cat!=='all' && card.dataset.cat!==cat)?'true':'false';
+  });
+}
+
+// ── EXPERIENCE EXPAND ──
+function toggleExp(card){
+  const details = card.querySelector('.tl-details');
+  const btn = card.querySelector('.tl-expand');
+  const isOpen = details.classList.toggle('open');
+  btn.textContent = isOpen ? '▲ Hide details' : '▼ Show details';
+}
+
+// ── CONTACT FORM ──
+function sendMessage(){
+  const name=document.getElementById('cf-name').value.trim();
+  const email=document.getElementById('cf-email').value.trim();
+  const msg=document.getElementById('cf-msg').value.trim();
+  const status=document.getElementById('formStatus');
+  if(!name||!email||!msg){status.textContent='⚠️ Please fill in all fields.';status.style.color='#fb7185';return;}
+  window.location.href=`mailto:r7475244@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent('Name: '+name+'\nEmail: '+email+'\n\nMessage:\n'+msg)}`;
+  status.textContent='✅ Opening your email client...';status.style.color='var(--accent3)';
+}
+
+// ── SCROLL ANIMATIONS ──
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
